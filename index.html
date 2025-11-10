@@ -1,1 +1,74 @@
-<p>Muchos boulders</p>
+<html ng-app="bouldermapApp"> 
+    <head>
+        <title>Bouldermap</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    </head>
+    <script>
+        angular.module('bouldermapApp', []);
+        
+        angular.module('bouldermapApp').controller('azureTestController', ['$scope', '$http', function($scope, $http) {
+            $scope.zones = [];
+            
+            $scope.fetchZones = function() {
+                $scope.fetchingZones = true;
+                
+                var httpRequest = $http({
+                    method: "get",
+                    url: "https://bouldermap.azurewebsites.net/api/zones/list",
+                    params: {
+                    },
+                });
+                
+                httpRequest.then(function successCallback(response) {
+                
+                    if (response.data.error) {
+                        toaster.pop('error', "", response.data.message);
+                        return;
+                    }
+                    
+                    $scope.zones = response.data.zones;
+                });
+                
+                httpRequest.finally(function() {
+                    $scope.fetchingZones = false;
+                });
+            };
+            
+            $scope.fetchZones();
+        
+        }]);
+    </script>
+  
+    <body ng-controller="azureTestController">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Bouldermap</h1>
+                
+                <table class="table table-condensed table-bordered table-striped">
+                    <tr>
+                        <th style="width: 250px">Nombre</th>
+                        <th style="text-align: right; width: 80px">Piedras</th>
+                        <th style="text-align: right; width: 80px">Problemas</th>
+                        <th style="text-align: right; width: 80px">Videos</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-if="fetchingZones">
+                        <td colspan="5" style="padding: 20px">Cargando sectores...</td>
+                    </tr>
+                    <tr ng-if="!fetchingZones && zones.length == 0">
+                        <td colspan="5" style="text-align: center; padding: 20px">No hay sectores.</td>
+                    </tr>
+                    <tr ng-repeat="zone in zones">
+                        <td style="text-align: right">{{ zone.name }}</td>
+                        <td style="text-align: right">{{ zone.stonesCount }}</td>
+                        <td style="text-align: right">{{ zone.problemsCount }}</td>
+                        <td style="text-align: right">{{ zone.videosCount }}</td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
