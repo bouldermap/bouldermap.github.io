@@ -41,33 +41,35 @@
     </script>
   
     <body ng-controller="azureTestController">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Bouldermap</h1>
-                
-                <table class="table table-condensed table-bordered table-striped">
-                    <tr>
-                        <th style="width: 250px">Nombre</th>
-                        <th style="text-align: right; width: 80px">Piedras</th>
-                        <th style="text-align: right; width: 80px">Problemas</th>
-                        <th style="text-align: right; width: 80px">Videos</th>
-                        <th></th>
-                    </tr>
-                    <tr ng-if="fetchingZones">
-                        <td colspan="5" style="padding: 20px">Cargando sectores...</td>
-                    </tr>
-                    <tr ng-if="!fetchingZones && zones.length == 0">
-                        <td colspan="5" style="text-align: center; padding: 20px">No hay sectores.</td>
-                    </tr>
-                    <tr ng-repeat="zone in zones">
-                        <td style="text-align: right">{{ zone.name }}</td>
-                        <td style="text-align: right">{{ zone.stonesCount }}</td>
-                        <td style="text-align: right">{{ zone.problemsCount }}</td>
-                        <td style="text-align: right">{{ zone.videosCount }}</td>
-                        <td>
-                        </td>
-                    </tr>
-                </table>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Bouldermap</h1>
+                    
+                    <table class="table table-condensed table-bordered table-striped">
+                        <tr>
+                            <th style="width: 250px">Nombre</th>
+                            <th style="text-align: right; width: 80px">Piedras</th>
+                            <th style="text-align: right; width: 80px">Problemas</th>
+                            <th style="text-align: right; width: 80px">Videos</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-if="fetchingZones">
+                            <td colspan="5" style="text-align: center; padding: 20px">Cargando sectores...</td>
+                        </tr>
+                        <tr ng-if="!fetchingZones && zones.length == 0">
+                            <td colspan="5" style="text-align: center; padding: 20px">No hay sectores.</td>
+                        </tr>
+                        <tr ng-repeat="zone in zones">
+                            <td style="text-align: right">{{ zone.name }}</td>
+                            <td style="text-align: right">{{ zone.stonesCount }}</td>
+                            <td style="text-align: right">{{ zone.problemsCount }}</td>
+                            <td style="text-align: right">{{ zone.videosCount }}</td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </body>
