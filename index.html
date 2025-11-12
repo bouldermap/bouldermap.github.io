@@ -1,101 +1,116 @@
-<html ng-app="bouldermapApp"> 
-    <head>
-        <meta charset="UTF-8">
-        <title>Bouldermap</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
-    </head>
-    <script>
-        angular.module('bouldermapApp', []);
-        
-        angular.module('bouldermapApp').controller('azureTestController', ['$scope', '$http', function($scope, $http) {
-            $scope.zones = [];
-            $scope.bottomRow = {
-                stonesCount: 0,
-                problemsCount: 0,
-                videosCount: 0
-            };
-            
-            $scope.fetchZones = function() {
-                $scope.fetchingZones = true;
+﻿
+<!DOCTYPE html>
+<html ng-app="bouldermapApp">
+<head>
+    <title ng-bind="'Bouldermap - ' + $root.title">Bouldermap</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="image_src" href="img/logo.jpg" />
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3BcS_SQbhaeCrgyKxjJ-_H-Gy7NeELYk&libraries=marker&v=weekly" defer></script>
+</head>
+
+<body ng-controller="headerController">
+
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <!-- horizontal bar -->
+                    <span class="icon-bar"></span> <!-- horizontal bar -->
+                    <span class="icon-bar"></span> <!-- horizontal bar -->
+                </button>
                 
-                var httpRequest = $http({
-                    method: "get",
-                    url: "https://bouldermap.azurewebsites.net/api/zones/list",
-                    params: {
-                    },
-                });
-                
-                httpRequest.then(function successCallback(response) {
-                
-                    if (response.data.error) {
-                        toaster.pop('error', "", response.data.message);
-                        return;
-                    }
-                    
-                    $scope.zones = response.data.zones;
-                    $scope.bottomRow = response.data.bottomRow;
-                });
-                
-                httpRequest.finally(function() {
-                    $scope.fetchingZones = false;
-                });
-            };
-            
-            $scope.fetchZones();
-        
-        }]);
-    </script>
-  
-    <body ng-controller="azureTestController">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Bouldermap.cl</h1>
-                    
-                    <table class="table table-condensed table-bordered table-striped">
-                        <tr>
-                            <th style="width: 250px">Nombre</th>
-                            <th style="text-align: right; width: 80px">Piedras</th>
-                            <th style="text-align: right; width: 80px">Problemas</th>
-                            <th style="text-align: right; width: 80px">Videos</th>
-                            <th></th>
-                        </tr>
-                        <tr ng-if="fetchingZones">
-                            <td colspan="5" style="text-align: center; padding: 20px">Cargando sectores...</td>
-                        </tr>
-                        <tr ng-if="!fetchingZones && zones.length == 0">
-                            <td colspan="5" style="text-align: center; padding: 20px">No hay sectores.</td>
-                        </tr>
-                        <tr ng-repeat="zone in zones">
-                            <td>{{ zone.name }}</td>
-                            <td style="text-align: right">{{ zone.stonesCount }}</td>
-                            <td style="text-align: right">{{ zone.problemsCount }}</td>
-                            <td style="text-align: right">{{ zone.videosCount }}</td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th style="text-align: right">{{ bottomRow.stonesCount }}</th>
-                            <th style="text-align: right">{{ bottomRow.problemsCount }}</th>
-                            <th style="text-align: right">{{ bottomRow.videosCount }}</th>
-                            <th>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <p style="font-weight: bold; font-size: 20px; color: red;">
-                        El lanzamiento será cuando se cumplan ciertos hitos:
-                    </p>
-                    
-                    <ul style="font-weight: bold; font-size: 20px; color: red;">
-                        <li>~800 videos.</li>
-                        <li>La silla bien registrada.</li>
-                        <li>Tal vez Namek y Las melosas.</li>
-                    </ul>
-                </div>
+                <!-- Mini logo -->
+                <a class="navbar-brand" href="#/home" style="display: block; padding: 10px">
+                    <img ng-src="img/brand-{{constants.licenseName}}.png" alt="" title="" />
+                </a>
             </div>
+
+            <!-- Togglable things -->
+            <div class="collapse navbar-collapse navbar-responsive-collapse" uib-collapse="navCollapsed">
+                
+                <!-- Public menu -->
+                <ul class="nav navbar-nav">
+                    <li><a href="#zones" >{{ 'Zones' | translate }}</a></li>
+                    <!--<li><a href="#stones" >{{ 'Stones' | translate }}</a></li>-->
+                    <li><a href="#problems" >{{ 'Problems' | translate }}</a></li>
+                    <li><a href="#videos" >{{ 'Videos' | translate }}</a></li>
+                    <li><a href="#climbers" >{{ 'Climbers' | translate }}</a></li>
+                    <!--<li><a href="#gyms" >{{ 'Gyms' | translate }}</a></li>-->
+					<li><a href="#discussions" >{{ 'Discussions' | translate }}</a></li>
+					<li><a href="#donations" >{{ 'Donations' | translate }}</a></li>
+                </ul>
+                
+                <!-- User menu -->
+                <ul class="nav navbar-nav" ng-show="currentUser.isLogged">
+                    <li class="dropdown" uib-dropdown id="" ng-repeat="menu in menus" ng-if="showMenuGroup(menu.label)">
+                        <a class="dropdown-toggle" uib-dropdown-toggle>{{ menu.label | translate }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="divider" ng-repeat-start="child in menu.children" ng-if="showMenu([child.href]) && child.dividerOnTop"></li>
+                            <li ng-repeat-end ng-if="showMenu([child.href])">
+                                <a href="#{{child.href}}">{{ child.label | translate }} <span ng-if="child.magnifierIcon" class="glyphicon glyphicon-search pull-right"></span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Logged user -->
+                    <li class="dropdown" uib-dropdown id="user-menu" ng-show="currentUser.isLogged">
+                        <a href="" class="dropdown-toggle" uib-dropdown-toggle>{{ currentUser.user.name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#users/changePassword">{{ 'Change password' | translate }}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="" ng-click="logout()">{{ 'Logout' | translate }}</a></li>
+                        </ul>
+                    </li>
+                    <!-- Not logged user -->
+                    <li ng-show="!currentUser.isLogged"><a ng-click="openRegisterModal($event)" >{{ 'Register' | translate }}</a></li>
+                    <li ng-show="!currentUser.isLogged"><a ng-click="openLoginModal($event)" >{{ 'Login' | translate }}</a></li>
+                    <!-- Language -->
+                    <li class="dropdown" uib-dropdown id="">
+                        <a href="" class="dropdown-toggle" uib-dropdown-toggle>{{ currentLanguage }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat-start="language in languages">
+                                <a href="" ng-click="setLanguage(language.code)">{{ language.name }} <span class="glyphicon glyphicon-ok pull-right" ng-show="currentLanguage == language.code"></span></a>
+                            </li>
+                            <li class="divider" ng-if="!$last" ng-repeat-end></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-    </body>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
+	
+        <div ng-if="false" style="font-family: 'Arial'; padding-top: 100px; text-align: center; background-color: #d6d6d6; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 999;">
+            <p style="font-size: 30px">Cargando...</p>
+            <img src="img/loading-tiny.gif" alt="">
+        </div>
+	
+        <toaster-container toaster-options="{'time-out': 3000, 'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
+        <div ng-view></div>
+    </div>
+    
+    <div class="footer" ng-controller="footerController">
+        <div class="container-fluid">
+            <p style="margin-top: 20px;">
+                <a href="#versions">{{ 'Build' | translate }} {{lastBuild}}</a> - {{ 'Developed by' | translate }} <a href="http://www.manger.cl" target="_blank">Germán Vicencio L.</a>
+                <span class="pull-right">
+                    <a href="https://play.google.com/store/apps/details?id=cl.edge.bouldermap" target="_blank">Android</a>
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <script src="deploy/all.min.js?v=1"></script> <!-- deploy/all.min.js -->
+    <script src="config.js?v=1"></script>
+    <link rel="stylesheet" href="deploy/all.min.css?v=1" /> <!-- deploy/all.min.css -->
+</body>
 </html>
