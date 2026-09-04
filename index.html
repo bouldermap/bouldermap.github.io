@@ -4,7 +4,7 @@
 <head>
     <title ng-bind="'Bouldermap - ' + $root.title">Bouldermap</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <link rel="icon" href="img/favicon.png" type="image/x-icon">
     <link rel="image_src" href="img/logo.jpg" />
@@ -40,12 +40,23 @@
                     <li><a href="#random" >{{ 'Random' | translate }}</a></li>
                     <li><a href="#zones" >{{ 'Zones' | translate }}</a></li>
                     <li><a href="#stones" >{{ 'Stones' | translate }}</a></li>
-                    <li><a href="#indications" >{{ 'Indications' | translate }}</a></li>
                     <li><a href="#problems" >{{ 'Problems' | translate }}</a></li>
                     <li><a href="#videos" >{{ 'Videos' | translate }}</a></li>
                     <li><a href="#climbers" >{{ 'Climbers' | translate }}</a></li>
                     <!--<li><a href="#gyms" >{{ 'Gyms' | translate }}</a></li>-->
 					<li><a href="#discussions" >{{ 'Discussions' | translate }}</a></li>
+                    <li class="dropdown" uib-dropdown>
+                        <a class="dropdown-toggle" uib-dropdown-toggle>Otros <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <li><a href="#indications" >{{ 'Indications' | translate }}</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#tracks" >{{ 'Tracks' | translate }}</a></li>
+                                <!--<li class="divider"></li>
+                                <li><a href="#faq" >{{ 'FAQ' | translate }}</a></li>-->
+                            </li>
+                        </ul>
+                    </li>
 					<!--<li><a href="#donations" >{{ 'Donations' | translate }}</a></li>
                     <li><a href="#todos" >{{ 'TO-DOs' | translate }}</a></li>-->
                 </ul>
