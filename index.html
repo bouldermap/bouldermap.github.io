@@ -4,11 +4,10 @@
 <head>
     <title ng-bind="'Bouldermap - ' + $root.title">Bouldermap</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <link rel="icon" href="img/favicon.png" type="image/x-icon">
     <link rel="image_src" href="img/logo.jpg" />
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3BcS_SQbhaeCrgyKxjJ-_H-Gy7NeELYk&libraries=geometry,marker&v=weekly" defer></script>
     
     <meta id="metaOgImage" property="og:image" content="img/logo.png"/>
 </head>
@@ -38,6 +37,7 @@
                 <!-- Public menu -->
                 <ul class="nav navbar-nav">
                     <li><a href="#random" >{{ 'Random' | translate }}</a></li>
+                    <li><a href="#zoneMap" >{{ 'Map' | translate }}</a></li>
                     <li><a href="#zones" >{{ 'Zones' | translate }}</a></li>
                     <li><a href="#stones" >{{ 'Stones' | translate }}</a></li>
                     <li><a href="#problems" >{{ 'Problems' | translate }}</a></li>
@@ -45,8 +45,20 @@
                     <li><a href="#climbers" >{{ 'Climbers' | translate }}</a></li>
                     <!--<li><a href="#gyms" >{{ 'Gyms' | translate }}</a></li>-->
 					<li><a href="#discussions" >{{ 'Discussions' | translate }}</a></li>
-					<li><a href="#donations" >{{ 'Donations' | translate }}</a></li>
-                    <li><a href="#todos" >{{ 'TO-DOs' | translate }}</a></li>
+                    <li class="dropdown" uib-dropdown>
+                        <a class="dropdown-toggle" uib-dropdown-toggle>Otros <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <li><a href="#indications" >{{ 'Indications' | translate }}</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#tracks" >{{ 'Tracks' | translate }}</a></li>
+                                <!--<li class="divider"></li>
+                                <li><a href="#faq" >{{ 'FAQ' | translate }}</a></li>-->
+                            </li>
+                        </ul>
+                    </li>
+					<!--<li><a href="#donations" >{{ 'Donations' | translate }}</a></li>
+                    <li><a href="#todos" >{{ 'TO-DOs' | translate }}</a></li>-->
                 </ul>
                 
                 <!-- User menu -->
@@ -72,7 +84,7 @@
                         </ul>
                     </li>
                     <!-- Not logged user -->
-                    <li ng-show="!currentUser.isLogged"><a ng-click="openRegisterModal($event)" >{{ 'Register' | translate }}</a></li>
+                    <li ng-show="!currentUser.isLogged"><a ng-click="openRegisterModal($event)" >Colaborar</a></li>
                     <li ng-show="!currentUser.isLogged"><a ng-click="openLoginModal($event)" >{{ 'Login' | translate }}</a></li>
                     <!-- Language -->
                     <li class="dropdown" uib-dropdown id="">
@@ -105,16 +117,18 @@
     <div class="footer" ng-controller="footerController">
         <div class="container">
             <p style="margin-top: 20px;">
-                <a href="#versions">{{ 'Build' | translate }} {{lastBuild}}</a> <!--- {{ 'Developed by' | translate }} <a href="http://www.manger.cl" target="_blank">Germán Vicencio L.-></a>
+                <a href="#versions">{{ 'Build' | translate }} {{lastBuild}}</a> <!--- {{ 'Developed by' | translate }} <a href="http://www.manger.cl" target="_blank">Germán Vicencio L.-></a> -->
                 <span class="pull-right">
-                    <!--<a href="https://play.google.com/store/apps/details?id=cl.edge.bouldermap" target="_blank">Android</a>-->
+                    <img src="img/android.png" style="height: 13px" /> <a href="https://play.google.com/store/apps/details?id=cl.bouldermap" target="_blank">Android</a>
+                     | 
+                    <img src="img/ios.png" style="height: 13px" /> <a href="https://apps.apple.com/cl/app/bouldermap/id6808265066" target="_blank">Android</a>
                 </span>
             </p>
         </div>
     </div>
 
-    <script src="deploy/all.min.js?v=22"></script> <!-- deploy/all.min.js -->
-    <script src="config.js?v=22"></script>
-    <link rel="stylesheet" href="deploy/all.min.css?v=22" /> <!-- deploy/all.min.css -->
+    <script src="deploy/all.min.js?v=26"></script> <!-- deploy/all.min.js -->
+    <script src="config.js?v=26"></script>
+    <link rel="stylesheet" href="deploy/all.min.css?v=26" /> <!-- deploy/all.min.css -->
 </body>
 </html>
