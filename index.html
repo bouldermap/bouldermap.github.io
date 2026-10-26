@@ -37,6 +37,24 @@
                 <!-- Public menu -->
                 <ul class="nav navbar-nav">
                     <li><a href="#random" >{{ 'Random' | translate }}</a></li>
+                    <li class="dropdown" uib-dropdown>
+                        <a class="dropdown-toggle" uib-dropdown-toggle>App <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <li>
+                                    <a href="https://play.google.com/store/apps/details?id=cl.bouldermap" target="_blank">
+                                        <img src="img/android.png" style="height: 13px" /> Android
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="https://apps.apple.com/cl/app/bouldermap/id6808265066" target="_blank">
+                                        <img src="img/ios.png" style="height: 13px" /> iOS (iPhone, iPad)
+                                    </a>
+                                </li>
+                            </li>
+                        </ul>
+                    </li>
                     <li><a href="#zoneMap" >{{ 'Map' | translate }}</a></li>
                     <li><a href="#zones" >{{ 'Zones' | translate }}</a></li>
                     <li><a href="#stones" >{{ 'Stones' | translate }}</a></li>
@@ -44,7 +62,6 @@
                     <li><a href="#videos" >{{ 'Videos' | translate }}</a></li>
                     <li><a href="#climbers" >{{ 'Climbers' | translate }}</a></li>
                     <!--<li><a href="#gyms" >{{ 'Gyms' | translate }}</a></li>-->
-					<li><a href="#discussions" >{{ 'Discussions' | translate }}</a></li>
                     <li class="dropdown" uib-dropdown>
                         <a class="dropdown-toggle" uib-dropdown-toggle>Otros <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -52,6 +69,8 @@
                                 <li><a href="#indications" >{{ 'Indications' | translate }}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#tracks" >{{ 'Tracks' | translate }}</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#discussions" >{{ 'Discussions' | translate }}</a></li>
                                 <!--<li class="divider"></li>
                                 <li><a href="#faq" >{{ 'FAQ' | translate }}</a></li>-->
                             </li>
